@@ -1,0 +1,21 @@
+{
+  "name": "ssfri-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "eleventy && node scripts/search-index.mjs",
+    "start": "eleventy --serve",
+    "import": "node scripts/import.mjs",
+    "format": "prettier --write \"**/*.{js,mjs,njk}\"",
+    "format:check": "prettier --check \"**/*.{js,mjs,njk}\""
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2",
+    "gray-matter": "^4.0.3",
+    "markdown-it": "^14.1.0",
+    "pagefind": "^1.5.2",
+    "prettier": "^3.9.10",
+    "prettier-plugin-jinja-template": "^2.2.0"
+  }
+}

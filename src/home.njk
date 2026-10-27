@@ -1,0 +1,13 @@
+---
+layout: base.njk
+permalink: /index.html
+---
+
+<article>
+	<h1>{{ tree.home.title }}</h1>
+	{{ tree.home.html | safe }}
+	<h2 class="section">Zadnje novice</h2>
+	{% set list = tree.latest %}
+	{% include "posts.njk" %}
+	<p><a href="/novice/">Vse novice →</a></p>
+</article>

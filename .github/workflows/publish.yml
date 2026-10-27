@@ -1,0 +1,48 @@
+# Ob vsakem pushu na main zgradi stran in jo objavi na vejo gh-pages (GitHub Pages).
+# Predogledi pull requestov (mapa pr-preview/) ostanejo nedotaknjeni.
+name: Objava strani
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: sudo apt-get update && sudo apt-get install -y poppler-utils pandoc
+
+      - run: npm ci
+
+      - run: npm run build
+        env:
+          SITE_URL: ${{ vars.SITE_URL || format('https://{0}.github.io', github.repository_owner) }}
+          PATH_PREFIX: ${{ vars.PATH_PREFIX }}
+
+      - name: Lastna domena (neobvezno)
+        if: vars.CNAME != ''
+        run: echo "${{ vars.CNAME }}" > _site/CNAME
+
+      - run: touch _site/.nojekyll
+
+      - uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: _site
+          branch: gh-pages
+          clean-exclude: |
+            pr-preview/

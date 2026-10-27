@@ -1,0 +1,49 @@
+---
+layout: base.njk
+pagination:
+    data: tree.nodes
+    size: 1
+    alias: node
+permalink: '{{ node.url }}index.html'
+eleventyComputed:
+    title: '{{ node.title }}'
+---
+
+{% if node.crumbs.length %}
+	<nav class="crumbs">{% for c in node.crumbs %}<a href="{{ c.url }}">{{ c.title }}</a>{% endfor %}</nav>
+{% endif %}
+
+<article data-pagefind-body>
+	<h1>{{ node.title }}</h1>
+	{% if node.id.startsWith('articles/') %}
+		<p class="meta">{{ node.date | dateSl }}{% for t in node.tags %}<a class="tag" href="{{ t.url }}">{{ t.name }}</a>{% endfor %}</p>
+		{% if node.image %}<img class="featured" src="{{ node.image }}" alt="" />{% endif %}
+	{% endif %}
+	{{ node.html | safe }}
+	{% if node.listing and node.rows.length %}
+		<table class="listing" data-pagefind-ignore>
+			<thead>
+				<tr>
+					{% if node.columns.date %}<th>Datum</th>{% endif %}
+					{% if node.columns.number %}<th>Št.</th>{% endif %}
+					<th>Ime</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for r in node.rows %}
+					<tr>
+						{% if node.columns.date %}<td class="nowrap">{{ r.date | dateSl }}</td>{% endif %}
+						{% if node.columns.number %}<td>{{ r.number }}</td>{% endif %}
+						<td>
+							{% if r.kind == 'file' %}
+								<a href="{{ r.url }}" download>{{ r.title }}</a>
+							{% else %}
+								<a href="{{ r.url }}">{{ r.title }}</a>
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endif %}
+</article>

@@ -1,0 +1,10 @@
+{% for p in list %}
+	<article class="post">
+		{% if p.image %}<a href="{{ p.url }}"><img class="thumb" src="{{ p.image }}" alt="" /></a>{% endif %}
+		<div>
+			<h2><a href="{{ p.url }}">{{ p.title }}</a></h2>
+			<p class="meta">{{ p.date | dateSl }}{% for t in p.tags %}<a class="tag" href="{{ t.url }}">{{ t.name }}</a>{% endfor %}</p>
+			{% if p.excerpt %}<p>{{ p.excerpt }}</p>{% endif %}
+		</div>
+	</article>
+{% endfor %}

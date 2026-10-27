@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="sl">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>{{ (title + ' · ' if title else '') + 'Študentski svet FRI' }}</title>
+		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+		<!--<link rel="apple-touch-icon" href="/apple-touch-icon.png" />-->
+		<link rel="alternate" type="application/rss+xml" title="Študentski svet FRI – Novice" href="/novice/feed.xml" />
+		{% if l and l.feed and l.feed != '/novice/feed.xml' %}
+			<link rel="alternate" type="application/rss+xml" title="Študentski svet FRI – {{ l.heading }}" href="{{ l.feed }}" />
+		{% endif %}
+		<link rel="stylesheet" href="/style.css" />
+	</head>
+	<body>
+		<header class="site-header">
+			<a class="brand" href="/">
+				<picture>
+					<source media="(prefers-color-scheme: dark)" srcset="/logo-dark.svg" />
+					<img src="/logo-light.svg" alt="" height="48" />
+				</picture>
+				<span>Študentski svet FRI</span>
+			</a>
+			<nav aria-label="Glavni meni">
+				{% for item in tree.nav %}<a href="{{ item.url }}" aria-current="{{ 'page' if page.url.startsWith(item.url) else 'false' }}">{{ item.title }}</a>{% endfor %}
+			</nav>
+			<form class="search" action="/iskanje/" role="search">
+				<input type="search" name="q" placeholder="Iskanje" aria-label="Iskanje" />
+			</form>
+		</header>
+		<main>{{ content | safe }}</main>
+	</body>
+</html>

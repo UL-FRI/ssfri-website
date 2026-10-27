@@ -1,0 +1,32 @@
+---
+layout: base.njk
+pagination:
+    data: tree.listings
+    size: 1
+    alias: l
+permalink: '{{ l.url }}index.html'
+eleventyComputed:
+    title: '{{ l.heading }}'
+---
+
+<div class="heading-row">
+	<h1>{{ l.heading }}</h1>
+	<a class="rss" href="{{ l.feed }}">RSS</a>
+</div>
+{% set list = l.items %}
+{% include "posts.njk" %}
+{% if l.total > 1 %}
+	<nav class="pager" aria-label="Strani">
+		{% if l.prev %}<a href="{{ l.prev }}" rel="prev">← Novejše</a>{% else %}<span class="disabled">← Novejše</span>{% endif %}
+		<ol>
+			{% for p in l.links %}
+				{% if p.gap %}
+					<li class="gap">…</li>
+				{% else %}
+					<li><a href="{{ p.url }}" aria-current="{{ 'page' if p.current else 'false' }}">{{ p.number }}</a></li>
+				{% endif %}
+			{% endfor %}
+		</ol>
+		{% if l.next %}<a href="{{ l.next }}" rel="next">Starejše →</a>{% else %}<span class="disabled">Starejše →</span>{% endif %}
+	</nav>
+{% endif %}

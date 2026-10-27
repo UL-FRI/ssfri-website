@@ -1,0 +1,28 @@
+---
+pagination:
+  data: tree.feeds
+  size: 1
+  alias: f
+permalink: "{{ f.url }}"
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Študentski svet FRI – {{ f.title | xmlClean | escape }}</title>
+    <link>{{ site.url }}/novice/</link>
+    <description>Novice Študentskega sveta Fakultete za računalništvo in informatiko</description>
+    <language>sl</language>
+    <atom:link href="{{ site.url }}{{ f.url }}" rel="self" type="application/rss+xml"/>
+{%- for item in f.items %}
+    <item>
+      <title>{{ item.title | xmlClean | escape }}</title>
+      <link>{{ site.url }}{{ item.url }}</link>
+      <guid isPermaLink="true">{{ site.url }}{{ item.url }}</guid>
+      <pubDate>{{ item.date | rfc822 }}</pubDate>
+      <description>{{ item.excerpt | xmlClean | escape }}</description>
+      <content:encoded>{{ item.html | absolutize(site.url) | cdata | safe }}</content:encoded>
+    </item>
+{%- endfor %}
+  </channel>
+</rss>
