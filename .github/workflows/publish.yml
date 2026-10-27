@@ -1,5 +1,3 @@
-# Ob vsakem pushu na main zgradi stran in jo objavi na vejo gh-pages (GitHub Pages).
-# Predogledi pull requestov (mapa pr-preview/) ostanejo nedotaknjeni.
 name: Objava strani
 
 on:
@@ -12,11 +10,17 @@ concurrency:
   cancel-in-progress: false
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - uses: actions/checkout@v4
 
@@ -38,11 +42,14 @@ jobs:
         if: vars.CNAME != ''
         run: echo "${{ vars.CNAME }}" > _site/CNAME
 
-      - run: touch _site/.nojekyll
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
 
-      - uses: JamesIves/github-pages-deploy-action@v4
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
         with:
-          folder: _site
-          branch: gh-pages
-          clean-exclude: |
-            pr-preview/
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
