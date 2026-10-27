@@ -73,7 +73,7 @@ Priloge in slike delujejo enako kot (mapa z `index.md`).
 
 Stran se v meniju prikaže samo, če ima v glavi `menu: N` (številka določa vrstni red).
 
-Povezava na drugo stran ali novico je relativna pot do njene `.md` datoteke ali mape (npr. z novice: `../pages/2014-12-19-kontakt.md`.
+Povezava na drugo stran ali novico je relativna pot do njene `.md` datoteke ali mape (npr. z novice: `../pages/kontakt.md`.
 
 ## Objava zapisnika
 
