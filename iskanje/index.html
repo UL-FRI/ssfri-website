@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="sl">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Iskanje · Študentski svet FRI</title>
+		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+		<!--<link rel="apple-touch-icon" href="/apple-touch-icon.png" />-->
+		<link rel="alternate" type="application/rss+xml" title="Študentski svet FRI – Novice" href="/novice/feed.xml" />
+		
+		<link rel="stylesheet" href="/style.css" />
+	</head>
+	<body>
+		<header class="site-header">
+			<a class="brand" href="/">
+				<picture>
+					<source media="(prefers-color-scheme: dark)" srcset="/logo-dark.svg" />
+					<img src="/logo-light.svg" alt="" height="48" />
+				</picture>
+				<span>Študentski svet FRI</span>
+			</a>
+			<nav aria-label="Glavni meni">
+				<a href="/novice/" aria-current="false">Novice</a><a href="/dokumenti/" aria-current="false">Dokumenti</a><a href="/o-nas/kaj-smo/" aria-current="false">Kaj smo?</a><a href="/smernice-za-objavo-novice/" aria-current="false">Objava novic / oglasov</a><a href="/kontakt/" aria-current="false">Kontakt</a>
+			</nav>
+			<form class="search" action="/iskanje/" role="search">
+				<input type="search" name="q" placeholder="Iskanje" aria-label="Iskanje" />
+			</form>
+		</header>
+		<main>
+<h1>Iskanje</h1>
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+<div id="search"></div>
+<noscript><p>Za iskanje je potreben JavaScript.</p></noscript>
+<script src="/pagefind/pagefind-ui.js"></script>
+<script>
+	const ui = new PagefindUI({
+		element: '#search',
+		showImages: false,
+		showSubResults: false,
+		translations: {
+			placeholder: 'Išči po novicah, straneh in dokumentih',
+			clear_search: 'Počisti',
+			load_more: 'Naloži več rezultatov',
+			search_label: 'Iskanje',
+			zero_results: 'Ni rezultatov za [SEARCH_TERM]',
+			many_results: '[COUNT] rezultatov za [SEARCH_TERM]',
+			one_result: '[COUNT] rezultat za [SEARCH_TERM]',
+			searching: 'Iščem [SEARCH_TERM] …',
+			alt_search: 'Ni rezultatov za [SEARCH_TERM]. Prikazani so rezultati za [DIFFERENT_TERM]',
+			search_suggestion: 'Ni rezultatov za [SEARCH_TERM]. Poskusi še: ',
+			element_for: 'Iskanje',
+		},
+	});
+	const q = new URLSearchParams(location.search).get('q');
+	if (q) ui.triggerSearch(q);
+</script>
+</main>
+	</body>
+</html>
